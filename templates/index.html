@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f7f8f3">
+    <meta name="description" content="FreshServe connects surplus food with timely rescue through smart donation prioritization.">
+    <title>FreshServe — Good Food, Shared Well</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="nav-inner">
+            <a class="brand" href="#" aria-label="FreshServe home">
+                <span class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 40 40" fill="none">
+                        <rect width="40" height="40" rx="13" fill="#245C45"/>
+                        <path d="M20 29V18" stroke="white" stroke-width="2.4" stroke-linecap="round"/>
+                        <path d="M20 21C11 21 9 15 10 10C17 10 21 14 20 21Z" fill="#B9E0A7"/>
+                        <path d="M20 17C20 10 25 7 31 8C31 15 27 19 20 20" fill="#E6F0D8"/>
+                    </svg>
+                </span>
+                <span class="brand-name">FreshServe<span class="brand-dot"></span></span>
+            </a>
+
+            <nav class="nav-links" aria-label="Main navigation">
+                <a class="nav-link active" href="#dashboard">Dashboard</a>
+                <a class="nav-link" href="#donations">Donations</a>
+                <a class="nav-link" href="#how-it-works">How it works</a>
+            </nav>
+
+            <a class="nav-cta" href="#add-donation">
+                <span aria-hidden="true">＋</span> Add donation
+            </a>
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <section class="hero" id="dashboard">
+            <div class="hero-copy">
+                <div class="eyebrow">
+                    <span class="eyebrow-dot"></span>
+                    SMART FOOD RESCUE
+                </div>
+
+                <h1>Good food.<br> <span>Better futures.</span></h1>
+
+                <p class="hero-description">
+                    Every meal matters. Organize surplus food donations
+                    and prioritize what needs rescuing first.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="button button-primary" href="#add-donation">
+                        Start a donation <span aria-hidden="true">↗</span>
+                    </a>
+                    <a class="button button-quiet" href="#donations">
+                        View rescue queue <span aria-hidden="true">↓</span>
+                    </a>
+                </div>
+
+                <div class="hero-note">
+                    <span class="note-icon" aria-hidden="true">✳</span>
+                    <span>Less waste, more nourishment.</span>
+                </div>
+            </div>
+
+            <div class="hero-visual" aria-label="Illustration of fresh food">
+                <div class="visual-orbit orbit-one"></div>
+                <div class="visual-orbit orbit-two"></div>
+
+                <div class="visual-label label-top">
+                    <span class="mini-icon leaf-icon" aria-hidden="true">✳</span>
+                    <span><strong>Food first.</strong><small>Waste less.</small></span>
+                </div>
+
+                <div class="food-illustration" aria-hidden="true">
+                    <div class="plate">
+                        <div class="plate-inner"></div>
+                        <span class="food-shape tomato"></span>
+                        <span class="food-shape leaf-one"></span>
+                        <span class="food-shape leaf-two"></span>
+                        <span class="food-shape carrot"></span>
+                        <span class="food-shape grain"></span>
+                        <span class="food-shape grain grain-two"></span>
+                        <span class="food-shape bean"></span>
+                    </div>
+                </div>
+
+                <div class="visual-label label-bottom">
+                    <span class="label-check" aria-hidden="true">✓</span>
+                    <span><strong>Every meal counts</strong><small>One step at a time</small></span>
+                </div>
+
+                <span class="decor-dot dot-one"></span>
+                <span class="decor-dot dot-two"></span>
+                <span class="decor-dot dot-three"></span>
+            </div>
+        </section>
+
+        <section class="stats-grid" aria-label="Donation statistics">
+            <article class="stat-card">
+                <div class="stat-top">
+                    <span class="stat-icon green-icon" aria-hidden="true">↗</span>
+                    <span class="stat-caption">ALL DONATIONS</span>
+                </div>
+                <p class="stat-number" id="totalDonations">0</p>
+                <p class="stat-label">Food listings added</p>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-top">
+                    <span class="stat-icon peach-icon" aria-hidden="true">♡</span>
+                    <span class="stat-caption">FOOD AVAILABLE</span>
+                </div>
+                <p class="stat-number" id="totalMeals">0</p>
+                <p class="stat-label">Meals listed for rescue</p>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-top">
+                    <span class="stat-icon yellow-icon" aria-hidden="true">◷</span>
+                    <span class="stat-caption">TIME-SENSITIVE</span>
+                </div>
+                <p class="stat-number" id="urgentDonations">0</p>
+                <p class="stat-label">Expiring within 3 hours</p>
+            </article>
+        </section>
+
+        <section class="workspace">
+            <div class="main-column">
+                <section class="content-card donation-card" id="add-donation">
+                    <div class="section-heading">
+                        <div>
+                            <span class="section-kicker">MAKE A DIFFERENCE</span>
+                            <h2>Add a food donation</h2>
+                            <p class="section-description">
+                                Have surplus food? Give it a chance to nourish someone.
+                            </p>
+                        </div>
+                        <span class="heading-icon" aria-hidden="true">＋</span>
+                    </div>
+
+                    <form id="donationForm">
+                        <div class="field">
+                            <label for="food">Food name</label>
+                            <input
+                                id="food"
+                                name="food"
+                                type="text"
+                                placeholder="e.g. Fresh bread, rice, meals"
+                                maxlength="60"
+                                required
+                            >
+                        </div>
+
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="quantity">Quantity <span>(meals)</span></label>
+                                <div class="input-wrap">
+                                    <input id="quantity" name="quantity" type="number"
+                                           min="1" max="100000" value="20" required>
+                                    <span class="input-suffix">meals</span>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label for="hoursLeft">Time until expiry</label>
+                                <div class="input-wrap">
+                                    <input id="hoursLeft" name="hoursLeft" type="number"
+                                           min="0" max="8760" value="5" required>
+                                    <span class="input-suffix">hours</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-tip">
+                            <span aria-hidden="true">ⓘ</span>
+                            <span>Enter accurate expiry times to help prioritize food rescue.</span>
+                        </div>
+
+                        <button class="button button-primary submit-button" type="submit">
+                            Add to rescue queue <span aria-hidden="true">→</span>
+                        </button>
+                    </form>
+                </section>
+
+                <section class="content-card queue-card" id="donations">
+                    <div class="queue-heading">
+                        <div>
+                            <span class="section-kicker">LIVE OVERVIEW</span>
+                            <h2>Rescue queue</h2>
+                            <p class="section-description">Food that needs a helping hand.</p>
+                        </div>
+                        <span class="queue-count" id="count">0 donations</span>
+                    </div>
+
+                    <div class="queue-toolbar">
+                        <span class="sort-label">
+                            <span aria-hidden="true">↕</span> Priority by expiry
+                        </span>
+                        <button class="text-button" id="sampleBtn" type="button">
+                            Load demo data
+                        </button>
+                    </div>
+
+                    <div id="donationList" class="donation-list" aria-live="polite">
+                        <div class="empty-state">
+                            <div class="empty-illustration" aria-hidden="true">🥬</div>
+                            <h3>Your rescue queue starts here</h3>
+                            <p>Add a food donation or load demo data to see the queue.</p>
+                            <a href="#add-donation" class="empty-link">Add your first donation →</a>
+                        </div>
+                    </div>
+
+                    <div class="queue-footer">
+                        <span class="footer-status"><span></span> Queue updates as you add food</span>
+                        <button class="button button-dark" id="prioritizeBtn" type="button">
+                            <span aria-hidden="true">✳</span> Prioritize with DSA
+                        </button>
+                    </div>
+
+                    <p id="message" class="status-message" role="status" aria-live="polite"></p>
+                </section>
+            </div>
+
+            <aside class="side-column">
+                <section class="impact-card">
+                    <div class="impact-icon" aria-hidden="true">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M24 40S5 29 5 16C5 5 20 4 24 15C29 4 43 6 43 17C43 29 24 40 24 40Z"
+                                  stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+                            <path d="M15 23L21 29L33 17" stroke="currentColor"
+                                  stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="section-kicker">THE BIGGER PICTURE</span>
+                    <h2>Small actions.<br>Meaningful impact.</h2>
+                    <p>Food rescue starts with noticing what we have and sharing what we can.</p>
+                    <div class="impact-divider"></div>
+                    <div class="impact-point">
+                        <span class="impact-point-icon">01</span>
+                        <span><strong>List surplus food</strong><small>Make available meals visible.</small></span>
+                    </div>
+                    <div class="impact-point">
+                        <span class="impact-point-icon">02</span>
+                        <span><strong>Prioritize urgency</strong><small>Act on the nearest expiry first.</small></span>
+                    </div>
+                    <div class="impact-point">
+                        <span class="impact-point-icon">03</span>
+                        <span><strong>Reduce food waste</strong><small>Help good food find a purpose.</small></span>
+                    </div>
+                </section>
+
+                <section class="algorithm-card" id="how-it-works">
+                    <div class="algorithm-top">
+                        <span class="algorithm-icon" aria-hidden="true">⌘</span>
+                        <span class="algorithm-tag">UNDER THE HOOD</span>
+                    </div>
+                    <h3>Powered by smart prioritization</h3>
+                    <p>A C++ priority queue sorts donations so food with less time remaining appears first.</p>
+                    <div class="code-preview" aria-label="Algorithm details">
+                        <div><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                        <code>priority_queue&lt;Donation&gt;</code>
+                        <span class="code-note">Soonest expiry → first</span>
+                    </div>
+                    <div class="tech-tags">
+                        <span>C++</span><span>DSA</span><span>Flask API</span>
+                    </div>
+                </section>
+            </aside>
+        </section>
+
+        <footer class="site-footer">
+            <a class="footer-brand" href="#">FreshServe<span>.</span></a>
+            <p>Built with care for a world with less food waste.</p>
+            <span class="footer-version">FOOD RESCUE PROJECT</span>
+        </footer>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
