@@ -14,6 +14,10 @@ struct Donation {
 
 struct CompareExpiry {
     bool operator()(const Donation& a, const Donation& b) const {
+        if (a.hoursLeft == b.hoursLeft) {
+            return a.id > b.id;
+        }
+
         return a.hoursLeft > b.hoursLeft;
     }
 };

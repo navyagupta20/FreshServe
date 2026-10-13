@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f7f8f3">
+    <title>FreshServe | NGO Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .ngo-page {
+            max-width: 1240px;
+            margin: auto;
+            padding: 28px 24px 50px;
+            color: #263128;
+        }
+
+        .ngo-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .ngo-nav a {
+            color: #245c45;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Larger FreshServe branding */
+        .ngo-nav a:first-child strong {
+            font-size: 27px;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+        }
+
+        .ngo-nav a:last-child,
+        #refreshBtn,
+        .claim-btn {
+            padding: 11px 16px;
+            border: 0;
+            border-radius: 10px;
+            background: #245c45;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .ngo-nav a:last-child:hover,
+        #refreshBtn:hover,
+        .claim-btn:hover {
+            background: #194832;
+        }
+
+        .ngo-hero {
+            padding: 28px;
+            margin-bottom: 24px;
+            border: 1px solid #e5ebdf;
+            border-radius: 20px;
+            background: #eff4e9;
+        }
+
+        .ngo-hero h1 { margin: 10px 0; }
+        .ngo-hero p { color: #66736a; line-height: 1.6; }
+
+        .ngo-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin: 24px 0 32px;
+        }
+
+        .ngo-stat, .ngo-board, .ngo-card {
+            box-sizing: border-box;
+            padding: 22px;
+            border: 1px solid #e8eae2;
+            border-radius: 17px;
+            background: white;
+        }
+
+        .ngo-stat span { color: #68736a; font-size: 13px; }
+
+        .ngo-stat strong {
+            display: block;
+            margin-top: 12px;
+            font-size: 30px;
+        }
+
+        .ngo-board-heading { margin-bottom: 18px; }
+        .ngo-board-heading p {
+            color: #778078;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .ngo-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .ngo-toolbar input,
+        .ngo-toolbar select,
+        .ngo-form input {
+            box-sizing: border-box;
+            min-width: 0;
+            padding: 12px;
+            border: 1px solid #e0e5dc;
+            border-radius: 10px;
+            background: #fff;
+            font: inherit;
+            font-size: 13px;
+        }
+
+        .ngo-toolbar input { flex: 1; }
+        .ngo-toolbar select { max-width: 100%; }
+
+        /* Consistent filter and refresh controls */
+        #statusFilter,
+        #refreshBtn {
+            min-height: 42px;
+            border-radius: 10px;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        #statusFilter {
+            min-width: 155px;
+            padding: 11px 34px 11px 14px;
+            border: 1px solid #dce5d9;
+            background-color: #f5f8f2;
+            color: #245c45;
+        }
+
+        #statusFilter:focus,
+        .ngo-toolbar input:focus {
+            outline: 2px solid #b8d0b8;
+            outline-offset: 1px;
+        }
+
+        #refreshBtn {
+            padding: 11px 16px;
+            border: 1px solid #245c45;
+            background: #245c45;
+            color: #fff;
+        }
+
+        .ngo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+        }
+
+        .ngo-card {
+            min-width: 0;
+            padding: 20px;
+            border-radius: 15px;
+            transition: box-shadow .2s, border-color .2s;
+        }
+
+        .ngo-card:hover {
+            border-color: #cdddc8;
+            box-shadow: 0 5px 18px #1f30220b;
+        }
+
+        .ngo-card h3 { margin: 0 0 10px; }
+
+        .ngo-card p {
+            color: #6f796f;
+            font-size: 13px;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .ngo-status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 8px;
+            background: #e8f3e5;
+            color: #32633c;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .ngo-status.claimed {
+            background: #fff0df;
+            color: #98602a;
+        }
+
+        .ngo-status.collected {
+            background: #e8effb;
+            color: #385f9b;
+        }
+
+        .ngo-form {
+            display: grid;
+            gap: 10px;
+            margin-top: 16px;
+            padding-top: 15px;
+            border-top: 1px solid #edf0e9;
+        }
+
+        .ngo-form input { width: 100%; }
+
+        .ngo-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .ngo-actions button {
+            padding: 10px 14px;
+            border: 0;
+            border-radius: 9px;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+       
+.collected-btn {
+    background: #245c45;
+    color: #fff;
+    border: 0;
+    border-radius: 9px;
+    padding: 10px 14px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.collected-btn:hover {
+    background: #194832;
+}
+
+
+        .ngo-message {
+            min-height: 24px;
+            color: #50724f;
+            font-size: 13px;
+        }
+
+        .ngo-empty {
+            grid-column: 1 / -1;
+            padding: 30px;
+            border: 1px dashed #d6dfd0;
+            border-radius: 15px;
+            background: #fafbf8;
+            text-align: center;
+            color: #778078;
+        }
+
+        @media (max-width: 600px) {
+            .ngo-page { padding: 20px 14px 32px; }
+
+            .ngo-nav a:first-child strong { font-size: 24px; }
+
+            .ngo-stats { grid-template-columns: 1fr; }
+            .ngo-hero, .ngo-board { padding: 20px; }
+            .ngo-toolbar { flex-direction: column; }
+
+            .ngo-toolbar input,
+            .ngo-toolbar select,
+            #refreshBtn {
+                width: 100%;
+                max-width: none;
+            }
+
+            .ngo-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+<main class="ngo-page">
+
+    <nav class="ngo-nav">
+        <a href="/" aria-label="FreshServe home"><strong>FreshServe</strong></a>
+        <a href="/">Donor Dashboard →</a>
+    </nav>
+
+    <section class="ngo-hero">
+        <p>FOOD RESCUE NETWORK</p>
+        <h1>NGO Dashboard</h1>
+        <p>Find available food, reserve donations, and track your pickups.</p>
+    </section>
+
+    <section class="ngo-stats">
+        <article class="ngo-stat">
+            <span>Available donations</span>
+            <strong id="availableCount">0</strong>
+        </article>
+
+        <article class="ngo-stat">
+            <span>Claimed donations</span>
+            <strong id="claimedCount">0</strong>
+        </article>
+
+        <article class="ngo-stat">
+            <span>Meals collected</span>
+            <strong id="collectedMeals">0</strong>
+        </article>
+    </section>
+
+    <section class="ngo-board-heading">
+        <h2>Donation board</h2>
+        <p>Enter your NGO name to claim a donation. Pickup details are saved with the booking.</p>
+    </section>
+
+    <section class="ngo-board">
+        <div class="ngo-toolbar">
+            <input
+                id="searchInput"
+                type="search"
+                placeholder="Search food donations..."
+                aria-label="Search donations"
+            >
+
+            <select id="statusFilter" aria-label="Filter donations">
+                <option value="Available">Available</option>
+                <option value="Claimed">Claimed</option>
+                <option value="Collected">Collected</option>
+                <option value="All">All statuses</option>
+            </select>
+
+            <button type="button" id="refreshBtn">↻ Refresh</button>
+        </div>
+
+        <p id="ngoMessage" class="ngo-message" role="status" aria-live="polite"></p>
+
+        <section id="ngoDonations" class="ngo-grid">
+            <p>Loading donations...</p>
+        </section>
+    </section>
+
+</main>
+
+<script src="{{ url_for('static', filename='ngo.js') }}" defer></script>
+</body>
+</html>

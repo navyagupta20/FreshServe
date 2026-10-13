@@ -8,12 +8,244 @@
     <meta name="description" content="FreshServe connects surplus food with timely rescue through smart donation prioritization.">
     <title>FreshServe — Good Food, Shared Well</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        /* Navigation */
+        .ngo-dashboard-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 16px;
+            border: 1px solid #245c45;
+            border-radius: 10px;
+            background: #245c45;
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .ngo-dashboard-link:hover {
+            background: #194832;
+            transform: translateY(-1px);
+        }
+
+        .ngo-dashboard-link:focus-visible {
+            outline: 3px solid #a5cbb3;
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 600px) {
+            .nav-inner {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .ngo-dashboard-link {
+                margin-left: auto;
+                padding: 9px 11px;
+                font-size: 12px;
+            }
+        }
+
+        /* Sidebar layout */
+        .side-column {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            min-width: 0;
+        }
+
+        .impact-card,
+        .algorithm-card {
+            box-sizing: border-box;
+            width: 100%;
+            min-width: 0;
+            border-radius: 20px;
+        }
+
+        .impact-card {
+            padding: 26px;
+        }
+
+        .impact-card h2 {
+            max-width: 100%;
+            margin: 14px 0 12px;
+            font-size: clamp(23px, 2vw, 29px);
+            line-height: 1.25;
+            letter-spacing: -0.7px;
+            overflow-wrap: anywhere;
+        }
+
+        .impact-description {
+            margin: 0;
+            line-height: 1.7;
+            color: #66736a;
+        }
+
+        .impact-divider {
+            margin: 22px 0;
+        }
+
+        .impact-point {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            margin-top: 19px;
+            min-width: 0;
+        }
+
+        .impact-point-icon {
+            flex: 0 0 36px;
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            background: #edf3e9;
+            color: #245c45;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .impact-point > span:last-child {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .impact-point strong,
+        .impact-point small {
+            display: block;
+        }
+
+        .impact-point strong {
+            margin: 2px 0 5px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .impact-point small {
+            color: #778078;
+            font-size: 12px;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .algorithm-card {
+            padding: 24px;
+        }
+
+        .algorithm-top {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            flex-wrap: wrap;
+        }
+
+        .algorithm-card h3 {
+            margin: 17px 0 10px;
+            font-size: 20px;
+            line-height: 1.4;
+            letter-spacing: -0.35px;
+            overflow-wrap: anywhere;
+        }
+
+        .algorithm-card > p {
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.75;
+            color: #69766c;
+        }
+
+        .code-preview {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 13px;
+            margin-top: 20px;
+            padding: 17px;
+            border: 1px solid #e4e9df;
+            border-radius: 13px;
+            background: #f7f8f3;
+            min-width: 0;
+        }
+
+        .code-window-dots {
+            display: flex;
+            gap: 5px;
+        }
+
+        .code-preview code {
+            display: block;
+            max-width: 100%;
+            color: #245c45;
+            font-size: 12px;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+            white-space: normal;
+        }
+
+        .code-note {
+            color: #69766c;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 17px;
+        }
+
+        .tech-tags span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 7px 10px;
+            border: 1px solid #e1e8dd;
+            border-radius: 8px;
+            background: #fff;
+            color: #355844;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 600px) {
+            .side-column {
+                gap: 16px;
+            }
+
+            .impact-card,
+            .algorithm-card {
+                padding: 20px;
+            }
+
+            .impact-card h2 {
+                font-size: 25px;
+            }
+
+            .algorithm-card h3 {
+                font-size: 19px;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <header class="topbar">
         <div class="nav-inner">
-            <a class="brand" href="#" aria-label="FreshServe home">
+            <a class="brand" href="/" aria-label="FreshServe home">
                 <span class="brand-mark" aria-hidden="true">
                     <svg viewBox="0 0 40 40" fill="none">
                         <rect width="40" height="40" rx="13" fill="#245C45"/>
@@ -28,8 +260,11 @@
             <nav class="nav-links" aria-label="Main navigation">
                 <a class="nav-link active" href="#dashboard">Dashboard</a>
                 <a class="nav-link" href="#donations">Donations</a>
-                <a class="nav-link" href="#how-it-works">How it works</a>
             </nav>
+
+            <a class="ngo-dashboard-link" href="{{ url_for('ngo_dashboard') }}">
+                NGO Dashboard <span aria-hidden="true">→</span>
+            </a>
 
             <a class="nav-cta" href="#add-donation">
                 <span aria-hidden="true">＋</span> Add donation
@@ -38,6 +273,8 @@
     </header>
 
     <main class="page-shell">
+
+        <!-- HERO -->
         <section class="hero" id="dashboard">
             <div class="hero-copy">
                 <div class="eyebrow">
@@ -45,7 +282,7 @@
                     SMART FOOD RESCUE
                 </div>
 
-                <h1>Good food.<br> <span>Better futures.</span></h1>
+                <h1>Good food.<br><span>Better futures.</span></h1>
 
                 <p class="hero-description">
                     Every meal matters. Organize surplus food donations
@@ -56,6 +293,7 @@
                     <a class="button button-primary" href="#add-donation">
                         Start a donation <span aria-hidden="true">↗</span>
                     </a>
+
                     <a class="button button-quiet" href="#donations">
                         View rescue queue <span aria-hidden="true">↓</span>
                     </a>
@@ -100,6 +338,7 @@
             </div>
         </section>
 
+        <!-- STATISTICS -->
         <section class="stats-grid" aria-label="Donation statistics">
             <article class="stat-card">
                 <div class="stat-top">
@@ -129,8 +368,11 @@
             </article>
         </section>
 
+        <!-- MAIN WORKSPACE -->
         <section class="workspace">
             <div class="main-column">
+
+                <!-- ADD DONATION -->
                 <section class="content-card donation-card" id="add-donation">
                     <div class="section-heading">
                         <div>
@@ -160,8 +402,15 @@
                             <div class="field">
                                 <label for="quantity">Quantity <span>(meals)</span></label>
                                 <div class="input-wrap">
-                                    <input id="quantity" name="quantity" type="number"
-                                           min="1" max="100000" value="20" required>
+                                    <input
+                                        id="quantity"
+                                        name="quantity"
+                                        type="number"
+                                        min="1"
+                                        max="100000"
+                                        value="20"
+                                        required
+                                    >
                                     <span class="input-suffix">meals</span>
                                 </div>
                             </div>
@@ -169,8 +418,15 @@
                             <div class="field">
                                 <label for="hoursLeft">Time until expiry</label>
                                 <div class="input-wrap">
-                                    <input id="hoursLeft" name="hoursLeft" type="number"
-                                           min="0" max="8760" value="5" required>
+                                    <input
+                                        id="hoursLeft"
+                                        name="hoursLeft"
+                                        type="number"
+                                        min="0"
+                                        max="8760"
+                                        value="5"
+                                        required
+                                    >
                                     <span class="input-suffix">hours</span>
                                 </div>
                             </div>
@@ -187,6 +443,7 @@
                     </form>
                 </section>
 
+                <!-- RESCUE QUEUE -->
                 <section class="content-card queue-card" id="donations">
                     <div class="queue-heading">
                         <div>
@@ -211,14 +468,18 @@
                             <div class="empty-illustration" aria-hidden="true">🥬</div>
                             <h3>Your rescue queue starts here</h3>
                             <p>Add a food donation or load demo data to see the queue.</p>
-                            <a href="#add-donation" class="empty-link">Add your first donation →</a>
+                            <a href="#add-donation" class="empty-link">
+                                Add your first donation →
+                            </a>
                         </div>
                     </div>
 
                     <div class="queue-footer">
-                        <span class="footer-status"><span></span> Queue updates as you add food</span>
+                        <span class="footer-status">
+                            <span></span> Queue updates as you add food
+                        </span>
                         <button class="button button-dark" id="prioritizeBtn" type="button">
-                            <span aria-hidden="true">✳</span> Prioritize with DSA
+                            <span aria-hidden="true">✳</span> Prioritize donations
                         </button>
                     </div>
 
@@ -226,60 +487,104 @@
                 </section>
             </div>
 
+            <!-- SIDEBAR -->
             <aside class="side-column">
+
                 <section class="impact-card">
                     <div class="impact-icon" aria-hidden="true">
                         <svg viewBox="0 0 48 48" fill="none">
                             <path d="M24 40S5 29 5 16C5 5 20 4 24 15C29 4 43 6 43 17C43 29 24 40 24 40Z"
-                                  stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
-                            <path d="M15 23L21 29L33 17" stroke="currentColor"
-                                  stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                  stroke="currentColor" stroke-width="2.5"
+                                  stroke-linejoin="round"/>
+                            <path d="M15 23L21 29L33 17"
+                                  stroke="currentColor" stroke-width="2.5"
+                                  stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
+
                     <span class="section-kicker">THE BIGGER PICTURE</span>
                     <h2>Small actions.<br>Meaningful impact.</h2>
-                    <p>Food rescue starts with noticing what we have and sharing what we can.</p>
+
+                    <p class="impact-description">
+                        Food rescue starts with noticing what we have
+                        and sharing what we can.
+                    </p>
+
                     <div class="impact-divider"></div>
+
                     <div class="impact-point">
                         <span class="impact-point-icon">01</span>
-                        <span><strong>List surplus food</strong><small>Make available meals visible.</small></span>
+                        <span>
+                            <strong>List surplus food</strong>
+                            <small>Make available meals visible.</small>
+                        </span>
                     </div>
+
                     <div class="impact-point">
                         <span class="impact-point-icon">02</span>
-                        <span><strong>Prioritize urgency</strong><small>Act on the nearest expiry first.</small></span>
+                        <span>
+                            <strong>Prioritize urgency</strong>
+                            <small>Rescue food nearing expiry first.</small>
+                        </span>
                     </div>
+
                     <div class="impact-point">
                         <span class="impact-point-icon">03</span>
-                        <span><strong>Reduce food waste</strong><small>Help good food find a purpose.</small></span>
+                        <span>
+                            <strong>Reduce food waste</strong>
+                            <small>Help good food find a purpose.</small>
+                        </span>
                     </div>
                 </section>
 
+                <!-- HOW IT WORKS -->
                 <section class="algorithm-card" id="how-it-works">
                     <div class="algorithm-top">
-                        <span class="algorithm-icon" aria-hidden="true">⌘</span>
-                        <span class="algorithm-tag">UNDER THE HOOD</span>
+                        <span class="algorithm-icon" aria-hidden="true">✳</span>
+                        <span class="algorithm-tag">HOW IT WORKS</span>
                     </div>
-                    <h3>Powered by smart prioritization</h3>
-                    <p>A C++ priority queue sorts donations so food with less time remaining appears first.</p>
-                    <div class="code-preview" aria-label="Algorithm details">
-                        <div><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
-                        <code>priority_queue&lt;Donation&gt;</code>
-                        <span class="code-note">Soonest expiry → first</span>
+
+                    <h3>Making food rescue simpler</h3>
+
+                    <p>
+                        FreshServe helps donors list surplus food and enables NGOs
+                        to claim available donations and coordinate pickups before
+                        the food expires.
+                    </p>
+
+                    <div class="code-preview">
+                        <div class="code-window-dots" aria-hidden="true">
+                            <span class="code-dot"></span>
+                            <span class="code-dot"></span>
+                            <span class="code-dot"></span>
+                        </div>
+
+                        <code>List → Prioritize → Rescue</code>
+
+                        <span class="code-note">
+                            Connecting surplus food with those who need it.
+                        </span>
                     </div>
-                    <div class="tech-tags">
-                        <span>C++</span><span>DSA</span><span>Flask API</span>
+
+                    <div class="tech-tags" aria-label="Platform features">
+                        <span>Food Donations</span>
+                        <span>NGO Coordination</span>
+                        <span>Pickup Tracking</span>
                     </div>
                 </section>
+
             </aside>
         </section>
 
+        <!-- FOOTER -->
         <footer class="site-footer">
-            <a class="footer-brand" href="#">FreshServe<span>.</span></a>
+            <a class="footer-brand" href="/">FreshServe<span>.</span></a>
             <p>Built with care for a world with less food waste.</p>
             <span class="footer-version">FOOD RESCUE PROJECT</span>
         </footer>
+
     </main>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </body>
 </html>

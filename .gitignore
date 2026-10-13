@@ -16,3 +16,4 @@ env/
 # Operating system files
 .DS_Store
 Thumbs.db
+freshserve.db
