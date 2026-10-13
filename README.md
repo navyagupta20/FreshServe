@@ -1,4 +1,4 @@
-# FreshServe — Smart Food Rescue & Management
+# FreshServe - Smart Food Rescue & Management
 
 FreshServe is a web-based platform designed to organize surplus food donations based on urgency and remaining expiry time. It combines Data Structures and Algorithms with a web interface to support more efficient food rescue and donation management.
 
