@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "freshserve.db"
-CPP_EXE = BASE_DIR / "cpp" / "freshserve.exe"
+CPP_EXE = BASE_DIR / "cpp" / "freshserve"
 
 
 # -------------------- DATABASE --------------------
