@@ -1,30 +1,37 @@
-# FreshServe - Smart Food Rescue & Management
+# FreshServe – Smart Food Rescue & Management
 
-FreshServe is a web-based platform designed to organize surplus food donations based on urgency and remaining expiry time. It combines Data Structures and Algorithms with a web interface to support more efficient food rescue and donation management.
+FreshServe is a web-based food donation management platform that helps donors manage surplus food and enables NGOs to claim donations and track their collection status. It combines Data Structures and Algorithms (DSA) with web development to prioritize food donations based on their expiry time.
+
+**Live Website:** https://freshserve-eqql.onrender.com/  
+**NGO Dashboard:** https://freshserve-eqql.onrender.com/ngo
 
 ## Features
 
-- **Smart Food Prioritization:** Organizes donations according to urgency.
-- **DSA-Based Processing:** Uses a C++ priority queue to prioritize food donations.
-- **Interactive Dashboard:** Add and view donations with quantities and expiry times.
-- **Backend Integration:** Connects the web interface to the C++ engine through Python Flask.
-- **Input Validation:** Validates donation details before processing.
-- **Impact Statistics:** Displays donation-related statistics on the dashboard.
+- **Smart Food Prioritization:** Prioritizes available donations by earliest expiry time.
+- **DSA-Based Processing:** Uses a C++ priority queue to organize donations efficiently, with donation ID as a tie-breaker.
+- **Donation Management:** Allows users to add, edit, view, and delete food donations.
+- **NGO Dashboard:** Enables NGOs to claim available donations and mark them as collected.
+- **Database Integration:** Uses SQLite to store donation details and track their status.
+- **Input Validation:** Validates donation information before processing.
+- **Interactive Interface:** Provides a web dashboard for managing and viewing donations.
 
 ## Tech Stack
 
 - **Languages:** C++, Python, JavaScript
-- **Backend:** Flask
+- **Backend:** Python Flask
 - **Frontend:** HTML, CSS, JavaScript
-- **Data Structures:** Priority Queue
+- **Database:** SQLite
+- **Data Structure:** C++ Priority Queue
+- **Deployment:** Render, Gunicorn
 - **Version Control:** Git and GitHub
 
 ## How It Works
 
-1. Users enter food donation details through the web interface.
-2. The Flask backend validates the submitted information.
-3. The C++ engine processes donations according to priority.
-4. The results are returned to the frontend and displayed on the dashboard.
+1. Donors submit food donation details through the web interface.
+2. The Flask backend validates requests and manages donation records in SQLite.
+3. The C++ priority queue prioritizes available donations by earliest expiry time.
+4. The frontend displays donation information and prioritization results.
+5. NGOs use the NGO dashboard to claim donations and update their collection status.
 
 ## Project Structure
 
@@ -33,12 +40,14 @@ FreshServe/
 ├── app.py
 ├── README.md
 ├── requirements.txt
+├── render.yaml
 ├── cpp/
-│   ├── main.cpp
-│   └── freshserve.exe
+│   └── main.cpp
 ├── static/
 │   ├── script.js
-│   └── style.css
+│   ├── style.css
+│   └── ngo.js
 └── templates/
-    └── index.html
+    ├── index.html
+    └── ngo.html
 ```
